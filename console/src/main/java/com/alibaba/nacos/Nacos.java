@@ -23,7 +23,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author nacos
+ * 总启动类 单机启动需要进行设置 虚拟机参数 -Dnacos.standalone=true
  */
+
 @SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 @ServletComponentScan
 @EnableScheduling
