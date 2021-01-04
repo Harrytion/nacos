@@ -22,6 +22,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
+ * Nacos starter.
+ *
  * @author nacos
  * 总启动类 单机启动需要进行设置 虚拟机参数 -Dnacos.standalone=true
  */
@@ -30,7 +32,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ServletComponentScan
 @EnableScheduling
 public class Nacos {
-
+    
     public static void main(String[] args) {
         SpringApplication.run(Nacos.class, args);
     }
