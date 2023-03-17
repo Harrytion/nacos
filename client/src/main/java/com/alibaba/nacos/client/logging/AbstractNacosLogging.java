@@ -13,33 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.nacos.client.logging;
 
-import com.alibaba.nacos.client.utils.StringUtils;
-import org.apache.commons.lang3.BooleanUtils;
+import com.alibaba.nacos.client.env.NacosClientProperties;
+import com.alibaba.nacos.common.utils.ConvertUtils;
+import com.alibaba.nacos.common.utils.StringUtils;
 
 /**
+ * Abstract nacos logging.
+ *
  * @author <a href="mailto:huangxiaoyu1018@gmail.com">hxy1991</a>
  * @since 0.9.0
  */
 public abstract class AbstractNacosLogging {
-
+    
     private static final String NACOS_LOGGING_CONFIG_PROPERTY = "nacos.logging.config";
-
+    
     private static final String NACOS_LOGGING_DEFAULT_CONFIG_ENABLED_PROPERTY = "nacos.logging.default.config.enabled";
-
-    private static final String NACOS_LOGGING_PATH_PROPERTY = "nacos.logging.path";
-
-    static {
-        String loggingPath = System.getProperty(NACOS_LOGGING_PATH_PROPERTY);
-        if (StringUtils.isBlank(loggingPath)) {
-            String userHome = System.getProperty("user.home");
-            System.setProperty(NACOS_LOGGING_PATH_PROPERTY, userHome + "/logs/nacos");
-        }
-    }
-
+    
     protected String getLocation(String defaultLocation) {
-        String location = System.getProperty(NACOS_LOGGING_CONFIG_PROPERTY);
+        String location = NacosClientProperties.PROTOTYPE.getProperty(NACOS_LOGGING_CONFIG_PROPERTY);
         if (StringUtils.isBlank(location)) {
             if (isDefaultConfigEnabled()) {
                 return defaultLocation;
@@ -48,15 +42,15 @@ public abstract class AbstractNacosLogging {
         }
         return location;
     }
-
+    
     private boolean isDefaultConfigEnabled() {
-        String property = System.getProperty(NACOS_LOGGING_DEFAULT_CONFIG_ENABLED_PROPERTY);
+        String property = NacosClientProperties.PROTOTYPE.getProperty(NACOS_LOGGING_DEFAULT_CONFIG_ENABLED_PROPERTY);
         // The default value is true.
-        return property == null || BooleanUtils.toBoolean(property);
+        return property == null || ConvertUtils.toBoolean(property);
     }
-
+    
     /**
-     * Load logging configuration
+     * Load logging configuration.
      */
     public abstract void loadConfiguration();
 }
